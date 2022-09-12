@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- djperpus.member tree view -->
+    <record id="djperpus_member_view_tree" model="ir.ui.view">
+        <field name="name">Member List</field>
+        <field name="model">djperpus.member</field>
+        <field name="arch" type="xml">
+            <tree>
+                <!-- Add your fields here -->
+                <field name="name"/>
+                <field name="nim"/>
+                <field name="poin"/>
+                <field name="level"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- djperpus.member form view -->
+    <record id="djperpus_member_view_form" model="ir.ui.view">
+        <field name="name">Member Form</field>
+        <field name="model">djperpus.member</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <!-- Add your fields here -->
+                        <field name="name"/>
+                        <field name="nim"/>
+                        <field name="poin" readonly="True"/>
+                        <field name="level" readonly="True"/>
+                    </group>
+                    <group name="dtl_name" string="Borrowed Items">
+                        <field name="pinjam_ids"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- djperpus.member action window -->
+    <record id="djperpus_member_action" model="ir.actions.act_window">
+        <field name="name">Members</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">djperpus.member</field>
+        <field name="view_mode">tree,form</field>
+        
+    </record>
+
+    <menuitem
+        id="djperpus_member_menu_act"
+        name="Members"
+        parent="djperpus_menu_root"
+        action="djperpus_member_action"
+        sequence="20"/>
+
+</odoo>

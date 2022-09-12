@@ -8,7 +8,9 @@
         <field name="arch" type="xml">
             <tree>
                 <!-- Add your fields here -->
-                <field name="nama"/>
+                <field name="buku_rak"/>
+                <field name="name"/>
+                <field name="buku_total_categ"/>
             </tree>
         </field>
     </record>
@@ -22,16 +24,39 @@
                 <sheet>
                     <group>
                         <!-- Add your fields here -->
-                        <field name="nama"/>
+                        <field name="name"/>
+                        <field name="buku_rak"/>
+                        <field name="buku_total_categ"/>
 
                     </group>
                     <group name="List" string="Book List">
-                        <field name="buku_ids"/>
+                        <field name="buku_ids">
+                            <tree editable="Bottom">
+                                <field name="buku_id"/>
+                                <field name="name"/>
+                                <field name="buku_stok"/>
+                            </tree>
+                        </field>
                     </group>
                 </sheet>
             </form>
         </field>
     </record>
 
+    <!-- djperpus.kategoribuku action window -->
+    <record id="djperpus_kategoribuku_action" model="ir.actions.act_window">
+        <field name="name">Categories</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">djperpus.kategoribuku</field>
+        <field name="view_mode">tree,form</field>
+        
+    </record>
+
+    <menuitem
+        id="djperpus_kategoribuku_menu_act"
+        name="Categories"
+        parent="djperpus_buku_menu_categ"
+        action="djperpus_kategoribuku_action"
+        sequence="10"/>
 
 </odoo>

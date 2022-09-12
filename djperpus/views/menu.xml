@@ -9,9 +9,8 @@
 
     <!-- This Menu Item Must have a parent -->
     <menuitem
-        id="djperpus_kategoribuku_menu_categ"
+        id="djperpus_buku_menu_categ"
         name="Books"
         parent="djperpus_menu_root"
         sequence="10"/>
-
 </odoo>

@@ -21,7 +21,7 @@
         <field name="name">Book</field>
         <field name="model">djperpus.buku</field>
         <field name="arch" type="xml">
-            <form string="">
+            <form string=""> 
                 <sheet>
                     <group name="Buku" string="Book">
                         <!-- Add your fields here -->
@@ -48,9 +48,9 @@
 
     <menuitem
         id="djperpus_buku_menu_act"
-        name="Books"
-        parent="djperpus_menu_root"
+        name="Book List"
+        parent="djperpus_buku_menu_categ"
         action="djperpus_buku_action"
-        sequence="10"/>
+        sequence="20"/>
 
 </odoo>

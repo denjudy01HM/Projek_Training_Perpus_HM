@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- djperpus.pinjam tree view -->
+    <record id="djperpus_pinjam_view_tree" model="ir.ui.view">
+        <field name="name">Borrowing List</field>
+        <field name="model">djperpus.pinjam</field>
+        <field name="arch" type="xml">
+            <tree>
+                <!-- Add your fields here -->
+                <field name="name"/>
+                <field name="member_id"/>
+                <field name="tgl_pinjam"/>
+                <field name="tgl_kembali"/>
+                <field name="denda"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- djperpus.pinjam form view -->
+    <record id="djperpus_pinjam_view_form" model="ir.ui.view">
+        <field name="name">Borrowing Form</field>
+        <field name="model">djperpus.pinjam</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <!-- Add your fields here -->
+                        <field name="name"/>
+                        <field name="member_id"/>
+                        <field name="tgl_pinjam"/>
+                        <field name="tgl_kembali"/>
+                    </group>
+                    <group name="dtl_pinjam" string="Details">
+                        <field name="detailpinjam_ids">
+                            <tree editable="bottom">
+                                <field name="buku_id"/>
+                                <field name="qty" sum="Total"/>
+                            </tree>
+                        </field>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- djperpus.pinjam action window -->
+    <record id="djperpus_pinjam_action" model="ir.actions.act_window">
+        <field name="name">Borrowing List</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">djperpus.pinjam</field>
+        <field name="view_mode">tree,form</field>
+        
+    </record>
+
+    <menuitem
+        id="djperpus_pinjam_menu_act"
+        name="Borrows"
+        parent="djperpus_menu_root"
+        action="djperpus_pinjam_action"
+        sequence="30"/>
+
+</odoo>

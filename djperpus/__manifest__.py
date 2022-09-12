@@ -30,6 +30,8 @@
         'views/menu.xml',
         'views/buku_view.xml',
         'views/kategori_buku_view.xml',
+        'views/member_view.xml',
+        'views/pinjam_view.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

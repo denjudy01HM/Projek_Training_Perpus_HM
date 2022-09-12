@@ -1,3 +1,6 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_djperpus_buku,access.djperpus.buku,model_djperpus_buku,,1,1,1,1
 access_djperpus_kategoribuku,access.djperpus.kategoribuku,model_djperpus_kategoribuku,,1,1,1,1
+access_djperpus_member,access.djperpus.member,model_djperpus_member,,1,1,1,1
+access_djperpus_pinjam,access.djperpus.pinjam,model_djperpus_pinjam,,1,1,1,1
+access_djperpus_detailpinjam,access.djperpus.detailpinjam,model_djperpus_detailpinjam,,1,1,1,1
