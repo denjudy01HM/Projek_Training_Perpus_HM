@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+
+    <!-- djperpus.kategoribuku tree view -->
+    <record id="djperpus_kategoribuku_view_tree" model="ir.ui.view">
+        <field name="name">Categories</field>
+        <field name="model">djperpus.kategoribuku</field>
+        <field name="arch" type="xml">
+            <tree>
+                <!-- Add your fields here -->
+                <field name="nama"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- djperpus.kategoribuku form view -->
+    <record id="djperpus_kategoribuku_view_form" model="ir.ui.view">
+        <field name="name">Form Category</field>
+        <field name="model">djperpus.kategoribuku</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <!-- Add your fields here -->
+                        <field name="nama"/>
+
+                    </group>
+                    <group name="List" string="Book List">
+                        <field name="buku_ids"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+</odoo>

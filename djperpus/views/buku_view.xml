@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- djperpus.buku tree view -->
+    <record id="djperpus_buku_view_tree" model="ir.ui.view">
+        <field name="name">Book list</field>
+        <field name="model">djperpus.buku</field>
+        <field name="arch" type="xml">
+            <tree>
+                <!-- Add your fields here -->
+                <field name="buku_id"/>
+                <field name="name"/>
+                <field name="kategoribuku_id"/>
+                <field name="buku_stok"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- djperpus.buku form view -->
+    <record id="djperpus_buku_view_form" model="ir.ui.view">
+        <field name="name">Book</field>
+        <field name="model">djperpus.buku</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group name="Buku" string="Book">
+                        <!-- Add your fields here -->
+                        <field name="name"/>
+                        <field name="buku_id"/>
+                        <field name="buku_stok"/>
+                    </group>
+                    <group name="Kategori" string="Category">
+                        <field name="kategoribuku_id"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- djperpus.buku action window -->
+    <record id="djperpus_buku_action" model="ir.actions.act_window">
+        <field name="name">Book List</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">djperpus.buku</field>
+        <field name="view_mode">tree,form</field>
+        
+    </record>
+
+    <menuitem
+        id="djperpus_buku_menu_act"
+        name="Books"
+        parent="djperpus_menu_root"
+        action="djperpus_buku_action"
+        sequence="10"/>
+
+</odoo>
