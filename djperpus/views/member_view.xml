@@ -10,6 +10,7 @@
                 <!-- Add your fields here -->
                 <field name="name"/>
                 <field name="nim"/>
+                <field name="no_telp"/>
                 <field name="poin"/>
                 <field name="level"/>
             </tree>
@@ -27,11 +28,21 @@
                         <!-- Add your fields here -->
                         <field name="name"/>
                         <field name="nim"/>
-                        <field name="poin" readonly="True"/>
-                        <field name="level" readonly="True"/>
+                        <field name="no_telp"/>
+                        <field name="alamat"/>
+                        <field name="poin"/>
+                        <field name="level"/>
+                        <field name="total_hold"/>
                     </group>
                     <group name="dtl_name" string="Borrowed Items">
                         <field name="pinjam_ids"/>
+                    </group>
+                    <group name="hold_name" string="Holdings Book">
+                        <field name="buku_ids"/>
+                            
+                    </group>
+                    <group name="adsaf" string="string">
+                        <field name="detailpinjam_ids"/>
                     </group>
                 </sheet>
             </form>

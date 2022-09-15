@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- djperpus.perpanjang form view -->
+    <record id="djperpus_perpanjang_view_form_wizard" model="ir.ui.view">
+        <field name="name">Renew Form</field>
+        <field name="model">djperpus.perpanjang</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <!-- Add your fields here -->
+                        <field name="hide" attrs="{'invisible': 1}"/>
+                        <field name="pinjam_id"/>
+                        <field name="member_id" attrs="{'invisible': [('hide','=', False)]}"/>
+                        <field name="tgl_baru"/> 
+
+                    </group>
+                    <footer>
+                        <button name="button_perpanjang" type="object" string="Save" class="btn btn-primary"/>
+                        <button special="cancel" string="Cancel" class="btn btn-secondary"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- djperpus.perpanjang action window -->
+    <record id="djperpus_perpanjang_action_wizard" model="ir.actions.act_window">
+        <field name="name">Renew Borrowing Date</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">djperpus.perpanjang</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="djperpus_perpanjang_view_form_wizard"/>
+        <field name="target">new</field>
+    </record>
+
+    <!-- This Menu Item must have a parent and an action -->
+    <menuitem id="perpanjang_menu_action_wizard" 
+            name="Renew Borrowing Date"
+            parent="djperpus_menu_root" 
+            action="djperpus_perpanjang_action_wizard" 
+            sequence="40"/>
+
+</odoo>

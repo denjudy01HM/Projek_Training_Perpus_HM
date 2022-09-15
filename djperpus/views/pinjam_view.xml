@@ -11,8 +11,8 @@
                 <field name="name"/>
                 <field name="member_id"/>
                 <field name="tgl_pinjam"/>
-                <field name="tgl_kembali"/>
-                <field name="denda"/>
+                <field name="tgl_batas"/>
+                <field name="state"/>
             </tree>
         </field>
     </record>
@@ -22,20 +22,26 @@
         <field name="name">Borrowing Form</field>
         <field name="model">djperpus.pinjam</field>
         <field name="arch" type="xml">
-            <form string="">
+            <form string="PinjamHeader">
+                <header>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,borrowed,incomplete,done"/>
+                </header>
                 <sheet>
                     <group>
                         <!-- Add your fields here -->
-                        <field name="name"/>
-                        <field name="member_id"/>
-                        <field name="tgl_pinjam"/>
-                        <field name="tgl_kembali"/>
+                        <field name="name" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                        <field name="member_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                        <field name="tgl_pinjam" attrs="{'readonly': [('state', '!=', 'draft')]}" />
+                        <field name="tgl_batas" force_save="1"/>
+                        <!-- <field name="total_pinjem"/> -->
                     </group>
                     <group name="dtl_pinjam" string="Details">
-                        <field name="detailpinjam_ids">
-                            <tree editable="bottom">
+                        <field name="detailpinjam_ids" attrs="{'readonly': [('state', '!=', 'draft')]}">
+                            <tree editable="true">
                                 <field name="buku_id"/>
-                                <field name="qty" sum="Total"/>
+                                <field name="qty" sum="Total Qtq"/>
+                                <field name="total_pinjam" force_save="1" sum="Total Holds"/>
+                                <field name="total_balik" sum="Total Return"/>
                             </tree>
                         </field>
                     </group>

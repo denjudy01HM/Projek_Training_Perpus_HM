@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- djperpus.returbuku form view -->
+    <record id="djperpus_returbuku_view_form_wizard" model="ir.ui.view">
+        <field name="name">Renew Form</field>
+        <field name="model">djperpus.returbuku</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <!-- Add your fields here -->
+                        <field name="hide" attrs="{'invisible': 1}"/>
+                        <field name="pinjam_id"/>
+                        <field name="member_id" attrs="{'invisible': [('hide','=', False)]}"/>
+                        <field name="buku_id" attrs="{'invisible': [('hide','=', False)]}"/>
+                        <field name="temp_qty" attrs="{'invisible': [('hide','=', False)]}"/>
+
+                    </group>
+                    <group name="detailreturn" string="Details" attrs="{'invisible': [('hide','=', False)]}">
+                        <field name="temp_tgl_kembali"/>
+                        <field name="temp_tgl_batas"/>
+                        <field name="temp_denda"/>
+                    </group>
+                    <footer>
+                        <button name="button_returbuku" type="object" string="Save" class="btn btn-primary"/>
+                        <button special="cancel" string="Cancel" class="btn btn-secondary"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- djperpus.returbuku action window -->
+    <record id="djperpus_returbuku_action_wizard" model="ir.actions.act_window">
+        <field name="name">Return Book</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">djperpus.returbuku</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="djperpus_returbuku_view_form_wizard"/>
+        <field name="target">new</field>
+    </record>
+
+    <!-- This Menu Item must have a parent and an action -->
+    <menuitem id="returbuku_menu_action_wizard" 
+            name="Return"
+            parent="djperpus_menu_root" 
+            action="djperpus_returbuku_action_wizard" 
+            sequence="60"/>
+
+</odoo>

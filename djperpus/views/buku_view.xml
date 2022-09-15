@@ -8,9 +8,11 @@
         <field name="arch" type="xml">
             <tree>
                 <!-- Add your fields here -->
-                <field name="buku_id"/>
                 <field name="name"/>
-                <field name="kategoribuku_id"/>
+                <field name="authorbuku_id"/>
+                <field name="penerbit_id"/>
+                <field name="buku_tahunterbit"/>
+                <field name="buku_id"/>
                 <field name="buku_stok"/>
             </tree>
         </field>
@@ -23,14 +25,24 @@
         <field name="arch" type="xml">
             <form string=""> 
                 <sheet>
+                    <group name="Kategori" string="Category">
+                        <field name="kategoribuku_id"/>
+                    </group>
                     <group name="Buku" string="Book">
                         <!-- Add your fields here -->
                         <field name="name"/>
+                        <field name="authorbuku_id"/>
+                        <field name="penerbit_id"/>
+                        <field name="buku_tahunterbit"/>
+                        <field name="buku_halaman"/>
                         <field name="buku_id"/>
                         <field name="buku_stok"/>
                     </group>
-                    <group name="Kategori" string="Category">
-                        <field name="kategoribuku_id"/>
+                    <group name="sinopsis" string="Summary">
+                        <field name="buku_ringkasan"/>
+                    </group>
+                    <group name="holder" string="Holder">
+                        <field name="member_ids"/>
                     </group>
                 </sheet>
             </form>

@@ -8,16 +8,30 @@ class Buku(models.Model):
     name = fields.Char(string='Title')
     buku_id = fields.Char(string='ISBN')
     buku_stok = fields.Integer(string='Item Availability')
+    buku_halaman = fields.Char(string='Pages')
+    buku_ringkasan = fields.Text(string='Summary')
+    buku_tahunterbit = fields.Char(string='Published')    
+    #kalau stok 0 is borrowd true
+    is_borrowed = fields.Boolean(string='Borrowed Status')
+    #kalau stok lebih dari 0 available true
+    is_available = fields.Boolean(string='Available Status')
+    
+    
+    kategoribuku_id = fields.Many2one('djperpus.kategoribuku',
+                                    string='Kategori Buku', ondelete="cascade")
 
-    kategoribuku_id = fields.Many2one('djperpus.kategoribuku', string='Kategori Buku', ondelete="cascade")
+    authorbuku_id = fields.Many2one('djperpus.authorbuku', string='Main Author')
+    penerbit_id = fields.Many2one('djperpus.penerbit', string='Publisher')
+    member_ids = fields.Many2many('djperpus.member', string='Holder') 
     
 class KategoriBuku(models.Model):
     _name = 'djperpus.kategoribuku'
     _description = 'New Description'
 
     name = fields.Selection([
-        ('agriculuture', 'Agriculture'), ('computerscience', 'Computer Science'), ('education', 'Education'), 
-        ('geography', 'Geography'), ('politicalscience', 'Political Science'),
+        ('agriculuture', 'Agriculture'), ('computerscience', 'Computer Science'),
+        ('education', 'Education'), ('geography', 'Geography'),
+        ('politicalscience', 'Political Science'),
     ], string='Categories', required="True", default="agriculuture")
     buku_rak = fields.Char(string='Book Section')
     buku_total_categ = fields.Integer(compute="_compute_total_buku", string='Books Total')
@@ -30,4 +44,20 @@ class KategoriBuku(models.Model):
     def _compute_total_buku(self):
         for record in self:
             record.buku_total_categ = len(self.env['djperpus.buku'].search([('kategoribuku_id', '=', record.id)]))
+
+class AuthorBuku(models.Model):
+    _name = 'djperpus.authorbuku'
+    _description = 'New Description'    
+
+    name = fields.Char(string='Author')
+    buku_ids = fields.One2many('djperpus.buku', 'authorbuku_id', string='List Buku')
+
+class PenerbitBuku(models.Model):
+    _name = 'djperpus.penerbit'
+    _description = 'New Description'    
+
+    name = fields.Char(string='Publisher')
+    buku_ids = fields.One2many('djperpus.buku', 'penerbit_id', string='List Buku')
+
+
     

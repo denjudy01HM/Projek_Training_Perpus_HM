@@ -4,3 +4,8 @@ access_djperpus_kategoribuku,access.djperpus.kategoribuku,model_djperpus_kategor
 access_djperpus_member,access.djperpus.member,model_djperpus_member,,1,1,1,1
 access_djperpus_pinjam,access.djperpus.pinjam,model_djperpus_pinjam,,1,1,1,1
 access_djperpus_detailpinjam,access.djperpus.detailpinjam,model_djperpus_detailpinjam,,1,1,1,1
+access_djperpus_authorbuku,access.djperpus.authorbuku,model_djperpus_authorbuku,,1,1,1,1
+access_djperpus_penerbit,access.djperpus.penerbit,model_djperpus_penerbit,,1,1,1,1
+access_djperpus_perpanjang,access.djperpus.perpanjang,model_djperpus_perpanjang,,1,1,1,1
+access_djperpus_tambahstokbuku,access.djperpus.tambahstokbuku,model_djperpus_tambahstokbuku,,1,1,1,1
+access_djperpus_returbuku,access.djperpus.returbuku,model_djperpus_returbuku,,1,1,1,1

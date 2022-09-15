@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- djperpus.tambahstokbuku form view -->
+    <record id="djperpus_tambahstokbuku_view_form_wizard" model="ir.ui.view">
+        <field name="name">Add Book Stock Form</field>
+        <field name="model">djperpus.tambahstokbuku</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <!-- Add your fields here -->
+                        <field name="buku_id"/>
+                        <field name="jml_tambahan"/>
+                    </group>
+                    <footer> 
+                        <button name="button_tambahstokbuku" type="object" string="Save" class="btn btn-primary"/>
+                        <button special="cancel" string="Cancel" class="btn btn-secondary"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- djperpus.tambahstokbuku action window -->
+    <record id="djperpus_tambahstokbuku_action_wizard" model="ir.actions.act_window">
+        <field name="name">Add Book Stock</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">djperpus.tambahstokbuku</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="djperpus_tambahstokbuku_view_form_wizard"/>
+        <field name="target">new</field>
+    </record>
+
+    <!-- This Menu Item must have a parent and an action -->
+    <menuitem id="tambahstokbuku_menu_action_wizard" 
+            name="Add Book Stock"
+            parent="djperpus_menu_root" 
+            action="djperpus_tambahstokbuku_action_wizard" 
+            sequence="50"/>
+
+</odoo>
