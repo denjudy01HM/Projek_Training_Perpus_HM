@@ -12,7 +12,9 @@
                 <field name="member_id"/>
                 <field name="tgl_pinjam"/>
                 <field name="tgl_batas"/>
+                <field name="tgl_kembali"/>
                 <field name="state"/>
+                <field name="denda"/>
             </tree>
         </field>
     </record>
@@ -37,13 +39,15 @@
                     </group>
                     <group name="dtl_pinjam" string="Details">
                         <field name="detailpinjam_ids" attrs="{'readonly': [('state', '!=', 'draft')]}">
-                            <tree editable="true">
+                            <tree editable="bottom">
+                                <!-- <field name="member_id" attrs="{'invisible': 1}"/> -->
                                 <field name="buku_id"/>
-                                <field name="qty" sum="Total Qtq"/>
+                                <field name="qty" sum="Total Qty"/>
                                 <field name="total_pinjam" force_save="1" sum="Total Holds"/>
                                 <field name="total_balik" sum="Total Return"/>
                             </tree>
                         </field>
+                        
                     </group>
                 </sheet>
             </form>
@@ -61,9 +65,9 @@
 
     <menuitem
         id="djperpus_pinjam_menu_act"
-        name="Borrows"
-        parent="djperpus_menu_root"
+        name="Borrowing List"
+        parent="djperpus_pinjam_menu_categ"
         action="djperpus_pinjam_action"
-        sequence="30"/>
+        sequence="10"/>
 
 </odoo>

@@ -37,9 +37,9 @@
 
     <!-- This Menu Item must have a parent and an action -->
     <menuitem id="perpanjang_menu_action_wizard" 
-            name="Renew Borrowing Date"
-            parent="djperpus_menu_root" 
+            name="Renew"
+            parent="djperpus_pinjam_menu_categ" 
             action="djperpus_perpanjang_action_wizard" 
-            sequence="40"/>
+            sequence="20"/>
 
 </odoo>

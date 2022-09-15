@@ -20,7 +20,7 @@
                     <group name="detailreturn" string="Details" attrs="{'invisible': [('hide','=', False)]}">
                         <field name="temp_tgl_kembali"/>
                         <field name="temp_tgl_batas"/>
-                        <field name="temp_denda"/>
+                        <field name="temp_denda" force_save="1"/>
                     </group>
                     <footer>
                         <button name="button_returbuku" type="object" string="Save" class="btn btn-primary"/>
@@ -44,8 +44,8 @@
     <!-- This Menu Item must have a parent and an action -->
     <menuitem id="returbuku_menu_action_wizard" 
             name="Return"
-            parent="djperpus_menu_root" 
+            parent="djperpus_pinjam_menu_categ" 
             action="djperpus_returbuku_action_wizard" 
-            sequence="60"/>
+            sequence="30"/>
 
 </odoo>

@@ -13,4 +13,10 @@
         name="Books"
         parent="djperpus_menu_root"
         sequence="10"/>
+
+    <menuitem
+        id="djperpus_pinjam_menu_categ"
+        name="Transaction Menu"
+        parent="djperpus_menu_root"
+        sequence="30"/>
 </odoo>

@@ -32,9 +32,9 @@
         'views/kategori_buku_view.xml',
         'views/member_view.xml',
         'views/pinjam_view.xml',
+        'wizard/retur_buku_wizard_view.xml',
         'wizard/tambah_stok_buku_wizard_view.xml',
         'wizard/perpanjang_wizard_view.xml',
-        'wizard/retur_buku_wizard_view.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

@@ -11,10 +11,6 @@ class Buku(models.Model):
     buku_halaman = fields.Char(string='Pages')
     buku_ringkasan = fields.Text(string='Summary')
     buku_tahunterbit = fields.Char(string='Published')    
-    #kalau stok 0 is borrowd true
-    is_borrowed = fields.Boolean(string='Borrowed Status')
-    #kalau stok lebih dari 0 available true
-    is_available = fields.Boolean(string='Available Status')
     
     
     kategoribuku_id = fields.Many2one('djperpus.kategoribuku',
@@ -22,8 +18,9 @@ class Buku(models.Model):
 
     authorbuku_id = fields.Many2one('djperpus.authorbuku', string='Main Author')
     penerbit_id = fields.Many2one('djperpus.penerbit', string='Publisher')
-    member_ids = fields.Many2many('djperpus.member', string='Holder') 
-    
+    member_ids = fields.Many2many('djperpus.member', string='Holder')
+    pinjam_id = fields.Many2one('djperpus.pinjam', string='pinjam')
+
 class KategoriBuku(models.Model):
     _name = 'djperpus.kategoribuku'
     _description = 'New Description'
