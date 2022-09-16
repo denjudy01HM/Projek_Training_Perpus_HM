@@ -1,4 +1,5 @@
 from odoo import api, fields, models
+from odoo.exceptions import ValidationError
 
 
 class Member(models.Model):
@@ -21,7 +22,7 @@ class Member(models.Model):
     buku_ids = fields.Many2many('djperpus.buku', string='Holdings')
     detailpinjam_ids = fields.One2many(comodel_name='djperpus.detailpinjam', inverse_name='dtlmember_id', string='Reff DTL')
     
-
+    @api.constrains('buku_ids')
     @api.depends('detailpinjam_ids','pinjam_ids')
     def _compute_total_hold(self):
         for rec in self:
@@ -35,6 +36,7 @@ class Member(models.Model):
                 if ob.buku_id in tamp:
                     print("==========>>>>>>> HOLD di set ",rec.total_hold)
                     tamps += ob.total_pinjam
+                    raise ValidationError ("You already have this book")
                 tamp.append(ob.buku_id)
                 rec.temp_total_hold += ob.total_pinjam
                 print("==========>>>>>>>",ob.total_pinjam)
@@ -73,6 +75,7 @@ class Member(models.Model):
                 rec.limit = 8
             elif rec.level == 'Grandmaster':
                 rec.limit = 10
+    
     
     
     # for rec in self:
