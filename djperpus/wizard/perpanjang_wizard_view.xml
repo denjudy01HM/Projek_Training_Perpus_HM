@@ -15,7 +15,7 @@
                         <field name="pinjam_id" domain="[('state', '!=', 'done')]"/>
                         <field name="member_id" attrs="{'invisible': [('hide','=', False)]}"/>
                         <field name="tgl_baru" attrs="{'invisible': [('tipe_input','=', 'renewbook')]}"/> 
-                        <field name="buku_id" attrs="{'invisible': [('tipe_input','=', 'renewdate')]}"/>
+                        <field name="buku_id" attrs="{'invisible': [('tipe_input','=', 'renewdate'),('hide','=', False)]}"/>
                         <field name="renew_same_book" attrs="{'invisible': [('tipe_input','=', 'renewdate')]}"/>
                     </group>
                     <footer>

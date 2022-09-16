@@ -9,7 +9,7 @@ class ReturBuku(models.Model):
     
     pinjam_id = fields.Many2one('djperpus.pinjam', string='Borrow ID' , store=True)
     member_id = fields.Many2one('djperpus.member', string='Member Name', readonly=True, store=True)
-    buku_id = fields.Many2one('djperpus.buku', string='Book Title', domain="[('member_ids','=', member_id)]")
+    buku_id = fields.Many2one('djperpus.buku', string='Book Title', readonly=True, store=True)
     temp_denda = fields.Integer(string='Penalty Fee', readonly=True)
     temp_tgl_batas = fields.Date(string='Due Date', readonly=True, store=True)
     temp_tgl_kembali = fields.Date(string='Return Date', default = fields.Date.today())
@@ -41,6 +41,7 @@ class ReturBuku(models.Model):
         for rec in self:
             if rec.pinjam_id:
                 rec.member_id = rec.env['djperpus.member'].search([('pinjam_ids','=',rec.pinjam_id.id)])
+                rec.buku_id = self.env['djperpus.detailpinjam'].search([('pinjam_id','=',rec.pinjam_id.id)]).mapped('buku_id')
                 rec.hide = True
             else:
                 rec.hide = False

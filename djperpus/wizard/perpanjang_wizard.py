@@ -8,7 +8,7 @@ class Perpanjang(models.TransientModel):
     pinjam_id = fields.Many2one('djperpus.pinjam', string='Borrow ID')
     member_id = fields.Many2one('djperpus.member', string='Member Name', readonly=True, store=True)
     tgl_baru = fields.Date(string='Renew Date')
-    buku_id = fields.Many2one('djperpus.buku', string='Book Name', domain="[('member_ids','=', member_id)]", store=True)
+    buku_id = fields.Many2one('djperpus.buku', string='Book Name', readonly=True, store=True)
     renew_same_book = fields.Integer(string='Amount', store=True)
     hide = fields.Boolean(string='Hide')
     tipe_input = fields.Selection(string='Input TYpe', 
@@ -47,6 +47,7 @@ class Perpanjang(models.TransientModel):
         for rec in self:
             if rec.pinjam_id:
                 rec.member_id = rec.env['djperpus.member'].search([('pinjam_ids','=',rec.pinjam_id.id)])
+                rec.buku_id = self.env['djperpus.detailpinjam'].search([('pinjam_id','=',rec.pinjam_id.id)]).mapped('buku_id')
                 rec.hide = True
             else:
                 rec.hide = False
