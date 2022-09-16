@@ -8,10 +8,10 @@ class ReturBuku(models.Model):
     _name = 'djperpus.returbuku'
     
     pinjam_id = fields.Many2one('djperpus.pinjam', string='Borrow ID' , store=True)
-    member_id = fields.Many2one('djperpus.member', string='Member Name', readonly=True)
+    member_id = fields.Many2one('djperpus.member', string='Member Name', readonly=True, store=True)
     buku_id = fields.Many2one('djperpus.buku', string='Book Title', domain="[('member_ids','=', member_id)]")
     temp_denda = fields.Integer(string='Penalty Fee', readonly=True)
-    temp_tgl_batas = fields.Date(string='Due Date', readonly=True)
+    temp_tgl_batas = fields.Date(string='Due Date', readonly=True, store=True)
     temp_tgl_kembali = fields.Date(string='Return Date', default = fields.Date.today())
     temp_qty = fields.Integer(string='Amount')
     
@@ -57,6 +57,8 @@ class ReturBuku(models.Model):
             print("<<<<<<<<<<<>>>>>>>>",res3)
         
         if rec.temp_qty <= res2.total_pinjam:
+            print("RES TOTAL HOLD total pinjam >>>>>>>",res2.total_pinjam)
+            print("RES TOTAL HOLD qty >>>>>>>",rec.temp_qty)
             if res2.total_pinjam - rec.temp_qty > 1:
                 res2.total_pinjam -= rec.temp_qty
                 res2.total_balik += rec.temp_qty

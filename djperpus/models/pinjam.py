@@ -89,6 +89,8 @@ class Pinjam(models.Model):
                 for objj in total:
                     print(objj.total_hold, ' ', str(ob.qty))
                     objj.total_hold -= ob.qty
+                    if objj.total_hold < 0:
+                        objj.total_hold = 0
 
         record = super(Pinjam, self).unlink()
 
@@ -105,7 +107,7 @@ class DetailPinjam(models.Model):
     pinjam_id = fields.Many2one(comodel_name='djperpus.pinjam', string='Borrowing Detail', ondelete="cascade")
     buku_id = fields.Many2one('djperpus.buku', string='Book List')
     qty = fields.Integer(string='Quantity')
-    total_balik = fields.Integer(string='Return', default=0)
+    total_balik = fields.Integer(string='Return', default=0, store=True, readonly=True)
     total_pinjam = fields.Integer(string='Total Book Holds', compute="_compute_total_pinjam", store=True, readonly=True)
     dtlmember_id = fields.Many2one(comodel_name='djperpus.member', string='member')
     

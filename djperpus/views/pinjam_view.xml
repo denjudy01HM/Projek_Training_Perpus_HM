@@ -44,7 +44,7 @@
                                 <field name="buku_id"/>
                                 <field name="qty" sum="Total Qty"/>
                                 <field name="total_pinjam" force_save="1" sum="Total Holds"/>
-                                <field name="total_balik" sum="Total Return"/>
+                                <field name="total_balik" force_save="1" sum="Total Return"/>
                             </tree>
                         </field>
                         
