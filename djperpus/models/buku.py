@@ -1,6 +1,5 @@
 from odoo import api, fields, models
 
-
 class Buku(models.Model):
     _name = 'djperpus.buku'
     _description = 'New Description'

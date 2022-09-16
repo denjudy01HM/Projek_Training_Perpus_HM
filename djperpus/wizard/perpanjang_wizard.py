@@ -1,5 +1,6 @@
 from odoo import api, fields, models
 
+from odoo.exceptions import ValidationError
 
 class Perpanjang(models.TransientModel):
     _name = 'djperpus.perpanjang'
@@ -20,12 +21,17 @@ class Perpanjang(models.TransientModel):
             if rec.tipe_input == 'renewdate':
                 self.env['djperpus.pinjam'].search([('id','=',rec.pinjam_id.id)]).write({'tgl_batas': rec.tgl_baru})
             elif rec.tipe_input == 'renewbook':
-                a = self.env['djperpus.detailpinjam'].search([('pinjam_id','=',rec.pinjam_id.id),('buku_id','=',rec.buku_id.id)])
-                b = self.env['djperpus.member'].search([('pinjam_ids','=',rec.pinjam_id.id)])
-                a.qty += rec.renew_same_book
-                print('========= BOOK total hold skrng', b.total_hold)
-                b.total_hold += rec.renew_same_book
-                print('========= BOOK total hold skrng', b.total_hold)
+                if rec.renew_same_book > 0:
+                    a = self.env['djperpus.detailpinjam'].search([('pinjam_id','=',rec.pinjam_id.id),('buku_id','=',rec.buku_id.id)])
+                    b = self.env['djperpus.member'].search([('pinjam_ids','=',rec.pinjam_id.id)])
+                    qty_tamp = a.qty
+                    a.qty += rec.renew_same_book
+                    a.total_pinjam = (a.total_pinjam-qty_tamp) + rec.renew_same_book
+                    print('========= BOOK total hold skrng', b.total_hold)
+                    b.total_hold += rec.renew_same_book
+                    print('========= BOOK total hold skrng', b.total_hold)
+                else:
+                    raise ValidationError ("Your amount number is not valid !!!")
 
     @api.onchange('pinjam_id','hide')
     def _onchange_member_id(self):

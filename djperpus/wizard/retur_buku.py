@@ -57,7 +57,7 @@ class ReturBuku(models.Model):
             print("<<<<<<<<<<<>>>>>>>>",res3)
         
         if rec.temp_qty <= res2.total_pinjam:
-            if res2.total_pinjam > 1:
+            if res2.total_pinjam - rec.temp_qty > 1:
                 res2.total_pinjam -= rec.temp_qty
                 res2.total_balik += rec.temp_qty
                 res2.buku_id.buku_stok += rec.temp_qty
@@ -68,21 +68,22 @@ class ReturBuku(models.Model):
                 res.write({'tgl_kembali': rec.temp_tgl_kembali})
                 res.write({'denda': rec.temp_denda})
                 res.write({'state': 'incomplete'})
-            elif res2.total_pinjam <= 1:
-                    res2.total_pinjam -= rec.temp_qty
-                    res2.total_balik += rec.temp_qty
-                    res2.buku_id.buku_stok += rec.temp_qty
-                    res3.poin += 5
-                    print("RES TOTAL HOLD sbl >>>>>>>",res3.total_hold)
-                    res3.total_hold -= rec.temp_qty
-                    print("RES TOTAL HOLD ssdh >>>>>>>",res3.total_hold)
-                    res.write({'tgl_kembali': rec.temp_tgl_kembali})
-                    res.write({'denda': rec.temp_denda})
-                    res.write({'state': 'incomplete'})
-                    res3.write({'detailpinjam_ids': [(3,res2.id)]})
-                    res.write({'state': 'done'})
-                    self.env['djperpus.buku'].search([('member_ids','=',tamp)]
-                        ).write({'member_ids':[(3,tamp)]})
+            elif res2.total_pinjam - rec.temp_qty < 1:
+                print("RES TOTAL HOLD ssdh >>>>>>>",res2.total_pinjam)
+                res2.total_pinjam -= rec.temp_qty
+                res2.total_balik += rec.temp_qty
+                res2.buku_id.buku_stok += rec.temp_qty
+                res3.poin += 5
+                print("RES TOTAL HOLD sbl >>>>>>>",res3.total_hold)
+                res3.total_hold -= rec.temp_qty
+                print("RES TOTAL HOLD ssdh >>>>>>>",res3.total_hold)
+                res.write({'tgl_kembali': rec.temp_tgl_kembali})
+                res.write({'denda': rec.temp_denda})
+                res.write({'state': 'incomplete'})
+                res3.write({'detailpinjam_ids': [(3,res2.id)]})
+                res.write({'state': 'done'})
+                self.env['djperpus.buku'].search([('member_ids','=',tamp)]
+                    ).write({'member_ids':[(3,tamp)]})
         else:
             raise ValidationError ("Your amount number is not valid !!!")
 

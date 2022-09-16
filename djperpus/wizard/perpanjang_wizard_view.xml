@@ -12,7 +12,7 @@
                         <!-- Add your fields here -->
                         <field name="hide" attrs="{'invisible': 1}"/>
                         <field name="tipe_input"/>
-                        <field name="pinjam_id"/>
+                        <field name="pinjam_id" domain="[('state', '!=', 'done')]"/>
                         <field name="member_id" attrs="{'invisible': [('hide','=', False)]}"/>
                         <field name="tgl_baru" attrs="{'invisible': [('tipe_input','=', 'renewbook')]}"/> 
                         <field name="buku_id" attrs="{'invisible': [('tipe_input','=', 'renewdate')]}"/>
