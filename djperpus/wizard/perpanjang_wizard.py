@@ -21,12 +21,11 @@ class Perpanjang(models.TransientModel):
             if rec.tipe_input == 'renewdate':
                 self.env['djperpus.pinjam'].search([('id','=',rec.pinjam_id.id)]).write({'tgl_batas': rec.tgl_baru})
             elif rec.tipe_input == 'renewbook':
-                a = self.env['djperpus.detailpinjam'].search([('pinjam_id','=',rec.pinjam_id.id),('buku_id','=',rec.buku_id.id)])
+                a = self.env['djperpus.detailpinjam'].search([('pinjam_id','=',rec.pinjam_id.id)])
                 b = self.env['djperpus.member'].search([('pinjam_ids','=',rec.pinjam_id.id)])
-                c = self.env['djperpus.buku'].search([('id','=',rec.buku_id.id)])
-                if rec.buku_id.buku_stok >= rec.renew_same_book:
+                c = self.env['djperpus.buku'].search([('pinjam_id','=',rec.pinjam_id.id)])
+                if c.buku_stok >= rec.renew_same_book:
                     if b.total_hold + rec.renew_same_book < b.limit :
-                        c.write({'buku_stok' : rec.buku_id.buku_stok - rec.renew_same_book})
                         qty_tamp = a.qty
                         if a.total_pinjam != qty_tamp:
                             a.qty += rec.renew_same_book
@@ -35,10 +34,11 @@ class Perpanjang(models.TransientModel):
                         print('========= BOOK total hold skrng', b.total_hold)
                         b.total_hold += rec.renew_same_book
                         print('========= BOOK total hold skrng', b.total_hold)
+                        c.write({'buku_stok' : c.buku_stok - rec.renew_same_book})
                     else:
                         raise ValidationError("Member {} can only borrow {} books because of the level limitations".format(b.name,b.limit))
                 else:
-                    raise ValidationError("Transaction failed, because there are only {} left on '{}'".format(rec.buku_id.buku_stok,rec.buku_id.name))   
+                    raise ValidationError("Transaction failed, because there are only {} left on '{}'".format(c.buku_stok,c.name))   
                 if rec.renew_same_book < 1:
                     raise ValidationError ("Your amount number is not valid !!!")
 
@@ -47,7 +47,8 @@ class Perpanjang(models.TransientModel):
         for rec in self:
             if rec.pinjam_id:
                 rec.member_id = rec.env['djperpus.member'].search([('pinjam_ids','=',rec.pinjam_id.id)])
-                rec.buku_id = self.env['djperpus.detailpinjam'].search([('pinjam_id','=',rec.pinjam_id.id)]).mapped('buku_id')
+                a = self.env['djperpus.detailpinjam'].search([('pinjam_id','=',rec.pinjam_id.id)])
+                rec.buku_id = a.buku_id
                 rec.hide = True
             else:
                 rec.hide = False

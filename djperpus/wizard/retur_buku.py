@@ -49,7 +49,7 @@ class ReturBuku(models.Model):
     def button_returbuku(self):
         for rec in self:
             res = self.env['djperpus.pinjam'].search([('id','=',rec.pinjam_id.id)])
-            res2 = self.env['djperpus.detailpinjam'].search([('pinjam_id','=',rec.pinjam_id.id),('buku_id','=',rec.buku_id.id)])
+            res2 = self.env['djperpus.detailpinjam'].search([('pinjam_id','=',rec.pinjam_id.id)])
             res3 = self.env['djperpus.member'].search([('pinjam_ids','=',rec.pinjam_id.id)])
             tamp = res3.id
             # res4 = sum(self.env['djperpus.pinjam'].search([('member_id','=',tamp)]).mapped('total_pinjem'))
@@ -60,7 +60,7 @@ class ReturBuku(models.Model):
         if rec.temp_qty <= res2.total_pinjam:
             print("RES TOTAL HOLD total pinjam >>>>>>>",res2.total_pinjam)
             print("RES TOTAL HOLD qty >>>>>>>",rec.temp_qty)
-            if res2.total_pinjam - rec.temp_qty > 1:
+            if res2.total_pinjam - rec.temp_qty >= 1:
                 res2.total_pinjam -= rec.temp_qty
                 res2.total_balik += rec.temp_qty
                 res2.buku_id.buku_stok += rec.temp_qty
