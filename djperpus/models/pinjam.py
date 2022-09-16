@@ -9,7 +9,7 @@ class Pinjam(models.Model):
     _name = 'djperpus.pinjam'
     _description = 'New Description'
 
-    name = fields.Char(string='Borrowing ID')
+    name = fields.Char(string='Borrowing ID', required=True)
     tgl_pinjam = fields.Date(string='Borrowing Date', default = fields.Date.today())
     tgl_batas = fields.Date(string='Due Date', readonly=True)
     tgl_kembali = fields.Date(string='Return Date')
@@ -20,10 +20,9 @@ class Pinjam(models.Model):
                                                             ('done','Done')], 
                                                             required=True, readonly=True, default='draft')
 
-    member_id = fields.Many2one(comodel_name='djperpus.member', string='Name')
+    member_id = fields.Many2one(comodel_name='djperpus.member', string='Name', required=True)
     detailpinjam_ids = fields.One2many(comodel_name='djperpus.detailpinjam', inverse_name='pinjam_id', string='Borrowing List', store=True)
     total_pinjem = fields.Integer(string='Amount', compute="_compute_total_pinjem", store=True)
-    
 
     @api.depends('detailpinjam_ids')
     def _compute_total_pinjem(self):
@@ -41,7 +40,20 @@ class Pinjam(models.Model):
             if len(record.detailpinjam_ids) < 1:
                 raise ValidationError('Please input at least 1 book!!') 
             
-            
+    @api.constrains('total_pinjem')
+    def _check_total_pinjem(self):
+        for rec in self:
+            b = self.env['djperpus.member'].search([('id','=',self.member_id.id)])
+            print("+++++++++++>>>>>> TOTAL PINJEM",rec.total_pinjem)
+            tamps = 0
+            if b.total_hold < 1:
+                tamps = rec.total_pinjem
+            print("=======>>>>>> TOTAL HOLD",b.total_hold)
+            print("+++++++++++>>>>>> TOTAL PINJEM",rec.total_pinjem)
+            if b.total_hold+tamps > b.limit :
+                raise ValidationError("Member {} can only borrow {} books because of the level limitations".format(b.name,b.limit))
+                
+    
 
     @api.onchange('tgl_pinjam')
     def _onchange_duedate(self):
@@ -55,28 +67,28 @@ class Pinjam(models.Model):
             holding = []
             total = []
             for record in self:
-                pinjam.append(self.env['djperpus.detailpinjam'].search(
+                pinjam = (self.env['djperpus.detailpinjam'].search(
                     [('pinjam_id', '=', record.id)]))
-                holding.append(self.env['djperpus.pinjam'].search(
+                holding = (self.env['djperpus.pinjam'].search(
                     [('id', '=', record.id)]))
-                total.append(self.env['djperpus.member'].search(
+                total = (self.env['djperpus.member'].search(
                     [('id', '=', record.member_id.id)]))
                 print(pinjam)
                 print(holding)
                 print(total)
                 
-            for ob in pinjam:
-                for rec in ob:
-                    print(rec.buku_id.buku_stok, ' ', str(rec.qty))
-                    rec.buku_id.buku_stok += rec.qty
-            
-            for obj in holding:
-                self.env['djperpus.buku'].search([('member_ids','=',obj.member_id.id)]
-                ).write({'member_ids':[(3,obj.member_id.id)]})
+                for ob in pinjam:
+                    for rec in ob:
+                        print(rec.buku_id.buku_stok, ' ', str(rec.qty))
+                        rec.buku_id.buku_stok += rec.qty
+                
+                for obj in holding:
+                    self.env['djperpus.buku'].search([('member_ids','=',obj.member_id.id)]
+                    ).write({'member_ids':[(3,obj.member_id.id)]})
 
-            # for objj in total:
-            #     print(objj.total_hold, ' ', str(ob.qty))
-            #     objj.total_hold -= ob.qty
+                for objj in total:
+                    print(objj.total_hold, ' ', str(ob.qty))
+                    objj.total_hold -= ob.qty
 
         record = super(Pinjam, self).unlink()
 
@@ -97,7 +109,6 @@ class DetailPinjam(models.Model):
     total_pinjam = fields.Integer(string='Total Book Holds', compute="_compute_total_pinjam", store=True, readonly=True)
     dtlmember_id = fields.Many2one(comodel_name='djperpus.member', string='member')
     
-
     @api.depends('qty')
     def _compute_total_pinjam(self):
         for rec in self:
@@ -129,22 +140,8 @@ class DetailPinjam(models.Model):
                 raise ValidationError("Transaction failed \nYou must add '{}' at least one".format(rec.buku_id.name))
             elif (rec.buku_id.buku_stok < rec.qty):
                 raise ValidationError("Transaction failed, because there are only {} left on '{}'".format(rec.buku_id.buku_stok,rec.buku_id.name))   
-        b = self.env['djperpus.member'].search([('id','=',self.pinjam_id.member_id.id)])
-        c = self.env['djperpus.pinjam'].search([('id','=',self.pinjam_id.id)])
-        print("+++++++++++>>>>>> TOTAL PINJEM",c.total_pinjem)
-        tamps = 0
-        if b.total_hold < 1:
-            tamps = c.total_pinjem
-        print("=======>>>>>> TOTAL HOLD",b.total_hold)
-        print("+++++++++++>>>>>> TOTAL PINJEM",c.total_pinjem)
-        if b.total_hold+tamps > b.limit :
-            raise ValidationError("Member {} can only borrow {} books because of the level limitations".format(b.name,b.limit))
-            
-    # @api.constrains('field_name')
-    # def _check_field_name(self):
-    #     a = self.env['djperpus.detailpinjam'].search([('pinjam_id','=',record.id),('dtlmember_id','=',record.member_id.id)])
-    #         print("========== THIS IS A",a)
-    #         raise ValidationError()
+        
+    
        
     
 
