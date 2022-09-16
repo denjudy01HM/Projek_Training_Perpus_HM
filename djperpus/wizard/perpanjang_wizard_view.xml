@@ -11,10 +11,12 @@
                     <group>
                         <!-- Add your fields here -->
                         <field name="hide" attrs="{'invisible': 1}"/>
+                        <field name="tipe_input"/>
                         <field name="pinjam_id"/>
                         <field name="member_id" attrs="{'invisible': [('hide','=', False)]}"/>
-                        <field name="tgl_baru"/> 
-
+                        <field name="tgl_baru" attrs="{'invisible': [('tipe_input','=', 'renewbook')]}"/> 
+                        <field name="buku_id" attrs="{'invisible': [('tipe_input','=', 'renewdate')]}"/>
+                        <field name="renew_same_book" attrs="{'invisible': [('tipe_input','=', 'renewdate')]}"/>
                     </group>
                     <footer>
                         <button name="button_perpanjang" type="object" string="Save" class="btn btn-primary"/>
@@ -27,7 +29,7 @@
 
     <!-- djperpus.perpanjang action window -->
     <record id="djperpus_perpanjang_action_wizard" model="ir.actions.act_window">
-        <field name="name">Renew Borrowing Date</field>
+        <field name="name">Renew Borrowing Book</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">djperpus.perpanjang</field>
         <field name="view_mode">tree,form</field>

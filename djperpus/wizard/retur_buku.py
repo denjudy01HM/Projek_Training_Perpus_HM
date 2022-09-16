@@ -7,7 +7,7 @@ from odoo.exceptions import ValidationError
 class ReturBuku(models.Model):
     _name = 'djperpus.returbuku'
     
-    pinjam_id = fields.Many2one('djperpus.pinjam', string='Borrow ID')
+    pinjam_id = fields.Many2one('djperpus.pinjam', string='Borrow ID' , store=True)
     member_id = fields.Many2one('djperpus.member', string='Member Name', readonly=True)
     buku_id = fields.Many2one('djperpus.buku', string='Book Title', domain="[('member_ids','=', member_id)]")
     temp_denda = fields.Integer(string='Penalty Fee', readonly=True)
@@ -85,7 +85,9 @@ class ReturBuku(models.Model):
                         ).write({'member_ids':[(3,tamp)]})
         else:
             raise ValidationError ("Your amount number is not valid !!!")
-        
+
+    
+            
         
 
             
